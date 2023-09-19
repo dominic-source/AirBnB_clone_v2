@@ -1,0 +1,107 @@
+#!/usr/bin/python3
+
+from console import HBNBCommand
+import unittest
+from unittest.mock import patch
+import datetime
+import json
+import io
+from uuid import UUID
+
+
+class TestConsole(unittest.TestCase):
+    """Test the console module"""
+
+    def setUp(self):
+        """The setup for console testing"""
+
+
+    def tearDown(self):
+        """The Tear down for console testing
+        functions at the end of each test"""
+        pass
+
+    def test_show(self):
+        """Test the help show functionality"""
+
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("help show")
+
+            # Retrieve the captured output
+            output = f.getvalue().strip()
+            self.assertEqual("Shows an individual instance of a class\n[Usage]: show <className> <objectId>", output)
+
+    def test_create_ordinary(self):
+        """Test the create method of cmd"""
+
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd('create State name="California"')
+
+            # Retrieve the captured output
+            output = f.getvalue().strip()
+            new_output = UUID(output)
+
+    def test_create_apostrophe(self):
+        """Test the create method of cmd"""
+
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd('create State name=\"Calif\"ornia\"')
+
+            # Retrieve the captured output
+            output = f.getvalue().strip()
+            new_output = UUID(output)
+
+    def test_create_int_float_combine(self):
+        """Test the create method of cmd"""
+
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd('Place city_id=\"0001\" user_id=\"0001\" name=\"My_little_house\"\
+number_rooms=4 number_bathrooms=2 max_guest=10 price_by_night=300 latitude=37.773972 longitude=-122.431297')
+
+            # Retrieve the captured output
+            output = f.getvalue().strip()
+            new_output = UUID(output)
+
+    def test_create_space_for_underscore(self):
+        """Test the create method of cmd"""
+
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd('create State name=\"Cali for nia\"')
+
+            # Retrieve the captured output
+            output = f.getvalue().strip()
+            self.assertEqual(output, "")
+
+    def test_create_apostrophe2(self):
+        """Test the create method of cmd"""
+
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("create State name=\'California\'")
+
+            # Retrieve the captured output
+            output = f.getvalue().strip()
+            self.assertEqual(output, "")
+
+    def test_create_wrong_int(self):
+        """Test the create method of cmd"""
+
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd('create State name=5t')
+
+            # Retrieve the captured output
+            output = f.getvalue().strip()
+            self.assertEqual(output, "")
+
+    def test_create_wrong_float(self):
+        """Test the create method of cmd"""
+
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd('create State name=5.333\"')
+
+            # Retrieve the captured output
+            output = f.getvalue().strip()
+            self.assertEqual(output, "")
+
+
+if __name__ == '__main__':
+    unittest.main()
