@@ -13,7 +13,7 @@ class FileStorage:
         if cls:
             filtered_objects = {}
             for key, value in FileStorage.__objects.items():
-                if isinstance(key, cls):
+                if cls in key:
                     filtered_objects[key] = value
             return filtered_objects
         else:
@@ -60,5 +60,5 @@ class FileStorage:
         """deletes obj from __objects if it’s inside"""
         if obj:
             for key, value in FileStorage.__objects.items():
-                if isinstance(value, obj.id):
-                    del FileStorage.__objects(obj)
+                if obj.id in value:
+                    del FileStorage.__objects(key)
