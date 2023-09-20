@@ -7,6 +7,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import scoped_session
 
+
 class DBStorage():
     """The storage class for database storage abstraction"""
 
@@ -41,10 +42,9 @@ class DBStorage():
         from models.review import Review
 
         classes = {
-                    'User': User, #'Place': Place,
-                    'State': State, 'City': City, #'Amenity': Amenity,
-                    #'Review': Review
-                  }
+                    'User': User,
+                    'State': State, 'City': City,
+        }
         dictionary_obj = {}
         if cls is not None:
             result = self.__session.query(classes[cls]).all()
@@ -69,7 +69,7 @@ class DBStorage():
     def save(self):
         """Commits all session of the database"""
         self.__session.commit()
-        
+
     def delete(self, obj=None):
         """Deletes an object from the database session"""
         if obj is not None:
@@ -78,5 +78,6 @@ class DBStorage():
     def reload(self):
         """Reload database"""
         Base.metadata.create_all(self.__engine)
-        Session = scoped_session(sessionmaker(bind=self.__engine, expire_on_commit=False))
+        Session = scoped_session(sessionmaker(
+            bind=self.__engine, expire_on_commit=False))
         self.__session = Session()

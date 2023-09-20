@@ -5,6 +5,7 @@ from sqlalchemy import String, ForeignKey, Column
 from models import storage
 from sqlalchemy.orm import relationship
 
+
 class State(BaseModel, Base):
     """ State class """
 
