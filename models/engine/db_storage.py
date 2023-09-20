@@ -42,7 +42,7 @@ class DBStorage():
         from models.review import Review
 
         classes = {
-                    'User': User,
+                    'User': User, 'Place': Place,
                     'State': State, 'City': City,
         }
         dictionary_obj = {}
@@ -55,7 +55,7 @@ class DBStorage():
             return dictionary_obj
         else:
             for key, value in classes.items():
-                result = self.__session.query('State').all()
+                result = self.__session.query(value).all()
                 for data in result:
                     # create new key for the objects
                     newkey = cls + '.' + data.id
@@ -78,6 +78,8 @@ class DBStorage():
     def reload(self):
         """Reload database"""
         Base.metadata.create_all(self.__engine)
-        Session = scoped_session(sessionmaker(
-            bind=self.__engine, expire_on_commit=False))
-        self.__session = Session()
+        # Create a sessionmaker object with expire_on_commit=False
+        Session = sessionmaker(bind=self.__engine, expire_on_commit=False)
+
+        # Wrap the sessionmaker in a scoped_session to make it thread-safe
+        self.__session = scoped_session(Session)()
