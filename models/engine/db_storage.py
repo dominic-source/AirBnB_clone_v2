@@ -1,13 +1,6 @@
 #!/usr/bin/python3
 
 """Database storage engine created for the AirBnb project"""
-
-from models.user import User
-from models.place import Place
-from models.state import State
-from models.city import City
-from models.amenity import Amenity
-from models.review import Review
 from models.base_model import Base
 import os
 from sqlalchemy import create_engine
@@ -44,8 +37,15 @@ class DBStorage():
     def all(self, cls=None):
         """Query on the current database session"""
 
+        from models.user import User
+        from models.place import Place
+        from models.state import State
+        from models.city import City
+        from models.amenity import Amenity
+        from models.review import Review
+
         classes = {
-                    #'User': User, 'Place': Place,
+                    'User': User, #'Place': Place,
                     'State': State, 'City': City, #'Amenity': Amenity,
                     #'Review': Review
                   }
@@ -70,6 +70,7 @@ class DBStorage():
     def new(self, obj):
         """Adds the object to the current session"""
         self.__session.add(obj)
+        print(self.session.new)
 
     def save(self):
         """Commits all session of the database"""
