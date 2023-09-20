@@ -16,7 +16,7 @@ class FileStorage:
             for key in dictionary:
                 partition = key.replace('.', ' ')
                 partition = partition.split()
-                if (partition[0] == cls.__name__):
+                if (partition[0] == cls):
                     dic[key] = self.__objects[key]
             return (dic)
         else:
