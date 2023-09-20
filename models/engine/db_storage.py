@@ -11,7 +11,7 @@ class DBStorage():
     """The storage class for database storage abstraction"""
 
     __engine = None
-    __storage = None
+    __session = None
 
     def __init__(self):
         """This will initialize the database storage"""
@@ -19,20 +19,16 @@ class DBStorage():
         # create engine for database and ping the database connection
         # which will check if the database connection is still alive or dead
         # and carry out connection maintenance
-        self.__engine = create_engine("mysql+mysqldb://{}:{}@{}/{}".format(
+        engine = create_engine("mysql+mysqldb://{}:{}@{}/{}".format(
             os.getenv("HBNB_MYSQL_USER"),
             os.getenv("HBNB_MYSQL_PWD"),
             os.getenv("HBNB_MYSQL_HOST"),
             os.getenv("HBNB_MYSQL_DB")
         ), pool_pre_ping=True)
-
+        self.__engine = engine
         # Delete tables if this is a testing environment instance
         if os.getenv("HBNB_ENV") == 'test':
-            conn = self.__engine.connect()
-            result = conn.execute("SHOW TABLES;").fetchall()
-            for table in result:
-                conn.execute(f"DROP TABLE IF EXISTS {table}")
-            conn.close()
+            Base.metadata.drop_all(engine)
 
     def all(self, cls=None):
         """Query on the current database session"""
@@ -55,22 +51,20 @@ class DBStorage():
             for data in result:
                 # create key for the object
                 key = cls + '.' + data.id
-                dictionary_obj.update({key: data})
+                dictionary_obj[key] = data
             return dictionary_obj
         else:
             for key, value in classes.items():
-                print(key, value)
-                result = self.__session.query(value).all()
+                result = self.__session.query('State').all()
                 for data in result:
                     # create new key for the objects
                     newkey = cls + '.' + data.id
-                    dictionary_obj.update({newkey: data})
+                    dictionary_obj[newkey] = data
             return dictionary_obj
 
     def new(self, obj):
         """Adds the object to the current session"""
         self.__session.add(obj)
-        print(self.session.new)
 
     def save(self):
         """Commits all session of the database"""
