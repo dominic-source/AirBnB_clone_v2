@@ -51,7 +51,7 @@ class BaseModel():
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
         try:
-            del dictionary._sa_instance_state
+            del dictionary['_sa_instance_state']
         except Exception:
             pass
         return dictionary
@@ -60,4 +60,4 @@ class BaseModel():
         """Deletes the current instance from the database"""
 
         from models import storage
-        storage.delete()
+        storage.delete(self)
