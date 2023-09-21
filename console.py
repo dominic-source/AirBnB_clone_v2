@@ -239,10 +239,12 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
                 return
             for k, v in storage.all(args).items():
-                print_list.append(str(v))
+                del v._sa_instance_state
+                print_list.append(v.__str__())
         else:
             for k, v in storage.all().items():
-                print_list.append(str(v))
+                del v._sa_instance_state
+                print_list.append(v.__str__())
         if len(print_list) != 0:
             print(print_list)
 

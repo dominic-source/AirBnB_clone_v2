@@ -42,7 +42,7 @@ class DBStorage():
         from models.review import Review
 
         classes = {
-                    'User': User, 'Place': Place,
+                    'User': User, 'Place': Place, 'Review': Review,
                     'State': State, 'City': City,
         }
         dictionary_obj = {}
