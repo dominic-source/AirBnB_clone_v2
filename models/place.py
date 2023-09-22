@@ -5,6 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Table, String, Integer, Float, ForeignKey
 from sqlalchemy.orm import relationship
 import models
+import os
 
 
 class Place(BaseModel, Base):
@@ -34,7 +35,7 @@ class Place(BaseModel, Base):
     amenity_ids = []
 
     if os.getenv("HBNB_TYPE_STORAGE") == "db":
-        reviews = relationship("Review", cascade="all, delete, delete-orphan", back_populates="place")
+        reviews = relationship("Review", cascade="all, delete, delete-orphan", backref="place")
 
     else:
         @property
