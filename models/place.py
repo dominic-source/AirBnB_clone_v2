@@ -32,3 +32,17 @@ class Place(BaseModel, Base):
     latitude = Column(Float)
     longitude = Column(Float)
     amenity_ids = []
+
+    if os.getenv("HBNB_TYPE_STORAGE") == "db":
+        reviews = relationship("Review", cascade="all, delete, delete-orphan", back_populates="place")
+
+    else:
+        @property
+        def reviews(self):
+            """There are the reviews for this place"""
+            from models import storage
+            list_review = []
+            for review, obj in storage.__objects.item():
+                if "Review" in review and (obj.place_id == Place.id):
+                    list_review.append(obj)
+            return list_review
