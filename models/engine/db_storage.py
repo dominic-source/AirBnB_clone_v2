@@ -41,7 +41,7 @@ class DBStorage():
 
         classes = {
                     'User': User, 'Place': Place, 'Review': Review,
-                    'State': State, 'City': City
+                    'State': State, 'City': City, 'Amenity': Amenity
         }
 
         dictionary_obj = {}
