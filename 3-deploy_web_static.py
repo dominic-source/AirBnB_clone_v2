@@ -6,6 +6,8 @@ do_pack = __import__("1-pack_web_static.py").do_pack
 
 def deploy():
     """The deployment of the web static file"""
-    do_pack()
-    do_deploy()
-    
+    archive_path = do_pack()
+    if not archive_path:
+        return False
+    deploy = do_deploy(archive_path)
+    return deploy

@@ -1,7 +1,0 @@
-#!/usr/bin/python3
-""" This module bundles the full deploy"""
-from fabric.operations import 
-do_deploy = __import__("2-do_deploy_web_static.py").do_deploy
-
-
-def deploy():
