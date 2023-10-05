@@ -14,7 +14,8 @@ def do_pack():
                                                  dt.minute, dt.second)
     local("mkdir -p ./versions")
     result = local("tar -czvf ./versions/{} web_static".format(vname))
+    path = "./versions/{}".format(vname)
     if result.succeeded:
-        return result
+        return path
     else:
         return None
