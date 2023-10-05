@@ -5,9 +5,10 @@ do_pack = __import__("1-pack_web_static").do_pack
 
 
 def deploy():
-    """The deployment of the web static file"""
+    """deploy code automatically"""
+
     archive_path = do_pack()
-    if not archive_path:
+    if archive_path is None:
         return False
-    deploy = do_deploy(archive_path)
-    return deploy
+    value = do_deploy(archive_path)
+    return value

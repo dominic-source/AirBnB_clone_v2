@@ -14,7 +14,7 @@ def do_deploy(archive_path):
     result = local("test -e {}".format(archive_path))
     if result.failed:
         return False
-    put(archive_path, "/tmp/")
+    res = put(archive_path, "/tmp/")
     filename = os.path.basename(archive_path)
     dfile = filename.split(".")[0]
     op5 = sudo("mkdir -p /data/web_static/releases/{}".format(dfile))
@@ -32,6 +32,6 @@ def do_deploy(archive_path):
                .format(dfile))
     if op1.failed or op2.failed or op3.failed or op4.failed:
         return False
-    if op5.failed or op6.failed or op7.failed:
+    if op5.failed or op6.failed or op7.failed or res.failed:
         return False
     return True
