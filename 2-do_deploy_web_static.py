@@ -17,6 +17,7 @@ def do_deploy(archive_path):
     try:
         filename = os.path.basename(archive_path)
         dfile = filename.split(".")[0]
+        put(archive_path, "/tmp/")
         run("mkdir -p /data/web_static/releases/{}/".format(dfile))
         run("tar -xzf /tmp/{} -C /data/web_static/releases/{}/"
             .format(filename, dfile))
