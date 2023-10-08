@@ -1,10 +1,10 @@
 # Create puppet code
 
 -> package { 'nginx':
-  ensure  => installed
+  ensure  => 'installed',
 }
 
--> file { '/data/web_static/releases/tests':
+-> file { '/data/web_static/releases/tests/':
   ensure  => directory,
 }
 
@@ -22,7 +22,7 @@ $cont = "<html>
 
 -> file { '/data/web_static/releases/test/index.html':
   ensure  => present,
-  content => $cont,
+  content => "$cont",
 }
 
 -> file { '/data/web_static/current':
@@ -42,7 +42,7 @@ $ngconfig = 'location /hbnb_static {
         }'
 -> file_line { 'find and replace':
   path  => '/etc/nginx/sites-available/default',
-  line  => $ngconfig,
+  line  => "$ngconfig",
   after => 'server_name index2.com www.index2.com;',
 }
 
