@@ -22,13 +22,13 @@ def do_deploy(archive_path):
     op1 = sudo("tar -xzf /tmp/{} -C /data/web_static/releases/{}".
                format(filename, dfile))
     op2 = sudo("rm /tmp/{}".format(filename))
-    op3 = sudo("rm -rf /data/web_static/current")
     op6 = sudo(
         "mv /data/web_static/releases/{}/web_static/* "
         "/data/web_static/releases/{}/"
         .format(dfile, dfile))
     op7 = sudo("rm -rf /data/web_static/releases/{}/web_static"
                .format(dfile))
+    op3 = sudo("rm -rf /data/web_static/current")
     op4 = sudo("ln -s /data/web_static/releases/{} /data/web_static/current"
                .format(dfile))
     if op1.failed or op2.failed or op3.failed or op4.failed:
