@@ -41,6 +41,7 @@ $ngconfig = 'location /hbnb_static {
                 alias /data/web_static/current/;
         }'
 -> file_line { 'find and replace':
+  path  => '/etc/nginx/sites-available/default',
   line  => $ngconfig,
   after => 'server_name index2.com www.index2.com;',
 }
