@@ -34,4 +34,4 @@ def do_deploy(archive_path):
 #        return False
 #    if op5.failed or op6.failed or op7.failed or res.failed:
 #        return False
-    return True
+    return 0
