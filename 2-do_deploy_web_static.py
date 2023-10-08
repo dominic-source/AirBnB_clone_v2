@@ -11,8 +11,9 @@ env.hosts = ['3.94.185.85', '100.24.255.207']
 def do_deploy(archive_path):
     """The deployment of the web static files"""
 
-    result = local("test -e {}".format(archive_path))
-    if result.failed:
+    local("test -e {}".format(archive_path))
+    result = local("echo $?")
+    if result:
         return False
     res = put(archive_path, "/tmp/")
     filename = os.path.basename(archive_path)
