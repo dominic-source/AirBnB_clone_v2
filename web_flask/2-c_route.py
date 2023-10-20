@@ -18,6 +18,7 @@ def hbnb_route():
     """route to hbnb route"""
     return "HBNB"
 
+
 @app.route("/c/<text>", strict_slashes=False)
 def text_route(text):
     """route text and remove underscores"""
