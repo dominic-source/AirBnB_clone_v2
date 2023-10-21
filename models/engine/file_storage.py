@@ -65,3 +65,7 @@ class FileStorage:
             iden = obj.id
             new = "{}.{}".format(cls, iden)
             FileStorage.__objects.pop(new, None)
+
+    def close(self):
+        """Deserialize json file to objects"""
+        self.reload()
