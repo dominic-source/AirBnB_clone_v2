@@ -27,7 +27,8 @@ def list_all__state(id=None):
             if value.id == id:
                 stateList = value
                 found = True
-    return render_template('9-states.html', stateList=stateList, found=found, mid=id)
+    return render_template('9-states.html', stateList=stateList,
+                           found=found, mid=id)
 
 
 if __name__ == '__main__':
