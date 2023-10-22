@@ -20,10 +20,16 @@ def filter_me():
 
     from models.state import State
     from models.amenity import Amenity
+    from models.place import Place
+    from models.user import User
 
     listState = storage.all(State).values()
     listAmenity = storage.all(Amenity).values()
-    return render_template("100-hbnb.html", listState=listState, listAmenity=listAmenity)
+    listUser = storage.all(User).values()
+    listPlace = storage.all(Place).values()
+    return render_template("100-hbnb.html", listState=listState,
+                           listPlace=listPlace,
+                           listAmenity=listAmenity, listUser=listUser)
 
 
 if __name__ == '__main__':
